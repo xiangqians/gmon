@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ .prefix }}/image/favicon.svg" type="image/svg+xml" rel="icon">
+    <link href="{{ .prefix }}/css/header.css" type="text/css" rel="stylesheet">
+    <link href="{{ .prefix }}/css/main.css" type="text/css" rel="stylesheet">
+    <link href="{{ .prefix }}/css/footer.css" type="text/css" rel="stylesheet">
+    <link href="{{ .prefix }}/css/index.css" type="text/css" rel="stylesheet">
+    <link href="{{ .prefix }}/css/uplot.css" rel="stylesheet">
+    <title>GMon</title>
+</head>
+<body>
+{{ template "header" . }}
+<main>
+    <table class="card">
+        {{ range $app := .apps }}
+        <tr>
+            <td class="name" colspan="4">{{ $app.Name }}</td>
+        </tr>
+        {{ range $instance := $app.Instances }}
+        <tr>
+            <td class="text">{{ $instance.Addr }}</td>
+            <td><span id="{{ $instance.Addr }},status" class='status {{ if eq $instance.Status 1 }}status-ok{{ else if eq $instance.Status 2 }}status-error{{ else }}status-unknown{{ end }}'>{{ $instance.Status }}</span></td>
+            <td id="{{ $instance.Addr }},time" class="text">{{ $instance.Time }}</td>
+            <td id="{{ $instance.Addr }},duration" class="text">{{ $instance.Duration }}</td>
+        </tr>
+        {{ end }}
+        {{ end }}
+    </table>
+    <div id="chart" style="display: inline-table;"></div>
+</main>
+{{ template "footer" }}
+</body>
+</html>
+<script src="{{ .prefix }}/js/uplot.js" type="text/javascript"></script>
+<script src="{{ .prefix }}/js/line.js" type="text/javascript"></script>
+<script src="{{ .prefix }}/js/index.js" type="text/javascript"></script>
+<script type="text/javascript">
+    // 将 Go 变量转为 JSON 并赋值给 JS 变量
+    let apps = {{ .apps }};
+    // console.log('apps', apps);
+</script>

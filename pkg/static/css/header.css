@@ -1,0 +1,34 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.header section {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.header section.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.header section.user .logout {
+    color: #666;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+}

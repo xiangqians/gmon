@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ .prefix }}/image/favicon.svg" type="image/svg+xml" rel="icon">
+    <link href="{{ .prefix }}/css/login.css" type="text/css" rel="stylesheet">
+    <title>GMon</title>
+</head>
+<body>
+<div class="container">
+    <div class="logo">GMon</div>
+    <form action="{{ .prefix }}/login1" method="post">
+        {{ if .error }}
+        <div class="input-group">
+            <div class="error">{{ .error }}</div>
+        </div>
+        {{ end }}
+        <div class="input-group">
+            <label for="user">用户名</label>
+            <input type="text" id="user" name="user" placeholder="请输入用户名" value="admin" value1="{{ .user }}" required>
+        </div>
+        <div class="input-group">
+            <label for="passwd">密码</label>
+            <input type="password" id="passwd" name="passwd" placeholder="请输入密码" value="admin" required>
+        </div>
+        <button type="submit">登录</button>
+    </form>
+    <div class="footer">
+        <span>&copy; 2025 xiangqian</span>
+        <a href="https://github.com/xiangqians/gmon" target="_blank">GitHub</a>
+    </div>
+</div>
+</body>
+</html>

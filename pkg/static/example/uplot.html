@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>uPlot</title>
+    <link href="../css/uplot.css" rel="stylesheet">
+</head>
+<body>
+<div id="chart"></div>
+</body>
+</html>
+<script src="../js/uplot.js"></script>
+<script src="../js/line.js"></script>
+<script src="../js/util.js"></script>
+<script>
+    // 折线图
+    let line = new Line(document.getElementById('chart'), // 要渲染的元素
+        // 图表标题
+        'Server',
+        // 图表宽度，单位：像素
+        800,
+        // 图表高度，单位：像素
+        400,
+        // n 个系列
+        [{
+            // 标签名称
+            label: 'CPU',
+            // 指定使用Y轴左侧
+            scale: YAxis.Left,
+            // 格式化值，四舍五入保留小数点后 2 位
+            format: (u, v) => v === null ? '--' : v.toFixed(2) + '%',
+            // 格式化值，四舍五入保留小数点后 0 位
+            formats: (u, vals) => vals.map(v => v.toFixed(0) + '%'),
+        }, {
+            // 标签名称
+            label: 'RAM',
+            // 指定使用Y轴右侧
+            scale: YAxis.Right,
+            // 格式化值
+            format: (u, v) => v === null ? '--' : formatBytes(v, 2),
+            formats: (u, vals) => vals.map(v => formatBytes(v, 0)),
+        }]);
+
+    // 模拟获取CPU数据（0-100%）
+    function getCpu(i) {
+        let cpu = 30 + Math.sin(i / 5) * 30 + Math.random() * 10;
+        return Math.max(0, Math.min(100, cpu));
+    }
+
+    // 模拟获取内存数据（Byte）
+    function getMem(i) {
+        let mem = 4000 + Math.sin(i / 8) * 1500 + Math.random() * 300;
+        let mb = Math.max(1000, Math.min(8000, mem));
+        let byte = mb * 1000 * 1000;
+        return byte;
+    }
+
+    // 静态测试数据
+    const maxPoints = line.maxPoints;
+    let time = Date.now();
+    for (let i = 0; i < maxPoints; i++) {
+        // 添加数据点
+        line.push(time - (maxPoints - i) * 1000, getCpu(i), getMem(i));
+    }
+
+    // 动态测试数据
+    let i = 0;
+    setInterval(() => {
+        // 添加数据点
+        if (i >= maxPoints) {
+            i = 0;
+        }
+        line.push(Date.now(), getCpu(i), getMem(i));
+        i++;
+    }, 2000); // 每隔 2 秒会执行一次回调函数
+</script>

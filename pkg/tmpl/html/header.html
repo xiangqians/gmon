@@ -1,0 +1,12 @@
+<!-- 页眉 -->
+{{ define "header" }}
+<div class="header">
+    <section>
+        <a href="{{ .prefix }}">/</a>
+    </section>
+    <section class="user">
+        <span>{{ .user }}</span>
+        <a href="{{ .prefix }}/logout" class="logout">登出</a>
+    </section>
+</div>
+{{ end }}
